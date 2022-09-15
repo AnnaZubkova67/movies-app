@@ -1,0 +1,8 @@
+body {
+    background-color: #E5E5E5;
+}
+
+.moviesapp {
+    display: flex;
+    justify-content: center;
+}

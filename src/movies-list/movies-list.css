@@ -1,0 +1,8 @@
+.movies-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 1010px;
+    height: 100%;
+    background-color: #FFFFFF;
+}

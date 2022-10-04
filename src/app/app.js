@@ -214,6 +214,7 @@ class App extends Component {
               onChange={(e) => this.pagination(e)}
             />
             <NetworkState onNetworkState={this.onNetworkState} />
+            <div className="content"> </div>
           </section>
         </section>
       </SwapiServiceProvider>

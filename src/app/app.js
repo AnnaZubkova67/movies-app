@@ -205,17 +205,17 @@ class App extends Component {
               network={network}
               sessionID={sessionID}
             />
-            <Pagination
-              defaultPageSize={20}
-              showSizeChanger={false}
-              defaultCurrent={pagIndex}
-              total={totalResults}
-              className="pagination"
-              onChange={(e) => this.pagination(e)}
-            />
             <NetworkState onNetworkState={this.onNetworkState} />
           </section>
           <div className="content"> </div>
+          <Pagination
+            defaultPageSize={20}
+            showSizeChanger={false}
+            defaultCurrent={pagIndex}
+            total={totalResults}
+            className="pagination"
+            onChange={(e) => this.pagination(e)}
+          />
         </section>
       </SwapiServiceProvider>
     );

@@ -38,8 +38,7 @@ class App extends Component {
       await this.sessionId();
     }
     const time = Math.floor((Date.now() - this.state.timeSession) / (1000 * 60 * 60));
-    console.log(time);
-    if (time >= 0) {
+    if (time >= 12) {
       localStorage.clear();
       await this.sessionId();
     }
@@ -106,7 +105,7 @@ class App extends Component {
     });
   };
 
-  // получение ID сессии, если после его регистрации не прошло больше 24 часов
+  // получение ID сессии, если после его регистрации не прошло больше 12 часов
   sessionIDSave = () => {
     this.setState({
       sessionID: JSON.parse(localStorage.getItem('sessionID')),

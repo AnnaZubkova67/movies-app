@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Rate } from 'antd';
+import { Rate, Spin } from 'antd';
 import './movie.css';
 import PropTypes from 'prop-types';
+import { LoadingOutlined } from '@ant-design/icons';
 
 import Genre from '../genre';
 import SwapiService from '../services/swapi-service';
@@ -47,6 +48,7 @@ export default class Movie extends Component {
       average: 0,
       poster: null,
       error: false,
+      posterStatus: false,
     };
   }
 
@@ -93,6 +95,7 @@ export default class Movie extends Component {
         if (response.ok) {
           this.setState({
             poster: response.url,
+            posterStatus: true,
           });
         }
       })
@@ -101,7 +104,20 @@ export default class Movie extends Component {
 
   render() {
     const { name, date, description, id, genreID } = this.props;
-    const { average, poster, error } = this.state;
+    const { average, poster, error, posterStatus } = this.state;
+    const antIcon = (
+      <LoadingOutlined
+        style={{
+          fontSize: 45,
+        }}
+        spin
+      />
+    );
+    const loadIcon = (
+      <div className="spin">
+        <Spin indicator={antIcon} />
+      </div>
+    );
     let classAverage = 'average text';
 
     if (average <= 3) {
@@ -115,13 +131,16 @@ export default class Movie extends Component {
     }
 
     const posterAndNotError = poster && !error;
+    const posterImg = (
+      <img
+        className="movie_img"
+        src={posterAndNotError ? poster : movieImage}
+        alt="Не удалось загрузить картинку фильма, попробуйте еще раз :("
+      />
+    );
     return (
       <li className="movie" id={id}>
-        <img
-          className="movie_img"
-          src={posterAndNotError ? poster : movieImage}
-          alt="Не удалось загрузить картинку фильма, попробуйте еще раз :("
-        />
+        {!posterStatus ? loadIcon : posterImg}
         <div className="movie_characteristics">
           <div className="movie_header">
             <h5 className="movie_name text">{Movie.textReduction(name, 3)}</h5>

@@ -2,7 +2,37 @@ body {
     background-color: #E5E5E5;
 }
 
-.moviesapp {
+ul {
+    list-style-type: none;
+}
+
+.movies-app {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.main {
+    height: 100%;
+    width: 73%;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #FFFFFF;
+}
+
+
+.pagination {
     display: flex;
     justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 1439px) {
+    .main {
+        width: 100%;
+    }
+
 }

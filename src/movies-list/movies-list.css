@@ -1,8 +1,21 @@
 .movies-list {
     display: flex;
+    position: relative;
+    bottom: 0;
+    overflow: scroll;
+    justify-content: center;
     flex-direction: row;
+    margin-top: 32px;
     flex-wrap: wrap;
-    width: 1010px;
     height: 100%;
-    background-color: #FFFFFF;
+    margin-bottom: 0;
+
+}
+
+.spin {
+    align-self: center;
+}
+
+.error {
+    align-self: center;
 }

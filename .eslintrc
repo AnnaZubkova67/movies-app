@@ -25,6 +25,7 @@
 
   "plugins": ["react", "prettier", "import"],
   "rules": {
+    "array-callback-return": "off",
     "jsx-a11y/label-has-associated-control": [ "error", {
       "required": {
         "some": [ "nesting", "id"  ]
@@ -36,6 +37,7 @@
       }
     }],
     "indent": ["error", 2],
+    "class-methods-use-this": ["error", { "exceptMethods": ["getResource", "getPoster", "postRating"] }],
     "no-param-reassign": 0,
     "prettier/prettier": "error",
     "linebreak-style": [0, "unix"],

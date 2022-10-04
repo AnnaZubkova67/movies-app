@@ -3,7 +3,7 @@
     z-index: 2;
     position: relative;
     bottom: 0;
-    overflow: scroll;
+    overflow: auto;
     justify-content: center;
     flex-direction: row;
     margin-top: 32px;

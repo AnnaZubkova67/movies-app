@@ -38,7 +38,8 @@ class App extends Component {
       await this.sessionId();
     }
     const time = Math.floor((Date.now() - this.state.timeSession) / (1000 * 60 * 60));
-    if (time >= 1) {
+    console.log(time);
+    if (time >= 0) {
       localStorage.clear();
       await this.sessionId();
     }

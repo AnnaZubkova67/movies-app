@@ -114,7 +114,7 @@ export default class Movie extends Component {
       />
     );
     const loadIcon = (
-      <div className="spin">
+      <div className="spin__poster">
         <Spin indicator={antIcon} />
       </div>
     );

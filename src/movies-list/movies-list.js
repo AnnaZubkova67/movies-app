@@ -76,7 +76,7 @@ function MoviesList({ moviesData, loading, error, network, sessionID }) {
 
   const errorMessage = error ? errorElement : null;
   const spinner = loading && !error ? loadIcon : null;
-  const content = !loading ? elements : null;
+  const content = !loading && network ? elements : null;
   const networkMessage =
     (!network && !loading && moviesData.length !== 0) || (!network && !loading) ? networkElement : null;
 

@@ -22,7 +22,8 @@
     justify-content: space-between;
 }
 
-.movie_img {
+.movie_img,
+.spin__poster{
     height: 100%;
     width: 100%;
     flex-shrink: 1;
@@ -98,6 +99,10 @@
 
 .green {
     border: 2px solid #66E900;
+}
+
+.spin__poster {
+    align-self: center;
 }
 
 @media (max-width: 768px) {

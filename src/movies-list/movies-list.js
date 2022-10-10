@@ -66,7 +66,7 @@ function MoviesList({ moviesData, loading, error, network, sessionID }) {
         description={description}
         poster={poster}
         date={date}
-        average={average}
+        overallRating={average}
         genreID={genreID}
         sessionID={sessionID}
         rating={rating}

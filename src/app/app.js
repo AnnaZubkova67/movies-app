@@ -18,7 +18,7 @@ class App extends Component {
       loading: true,
       error: false,
       network: true,
-      valueInput: undefined,
+      valueInput: '',
       pagIndex: 1,
       genre: [],
       sessionID: '',
@@ -33,7 +33,7 @@ class App extends Component {
     this.getListMovies(this.state.valueInput);
     if (localStorage.getItem('sessionID')) {
       await this.sessionIDSave();
-      await this.rateMovies();
+      // await this.rateMovies();
     } else {
       await this.sessionId();
     }
@@ -67,6 +67,7 @@ class App extends Component {
 
   // загрузка фильмов с сервера завершена успешно
   onMoviesLoaded = (mov) => {
+    localStorage.setItem('moviesData', JSON.stringify(mov.results));
     this.setState({
       moviesData: mov.results,
       loading: false,
@@ -139,8 +140,8 @@ class App extends Component {
 
   // получение всего списка фильмов при клике на search
   searchClick = () => {
-    this.getListMovies();
     this.setState({
+      moviesData: JSON.parse(localStorage.getItem('moviesData')),
       activeTabRate: false,
       activeTabSearch: true,
       pagIndex: 1,
@@ -207,7 +208,6 @@ class App extends Component {
             />
             <NetworkState onNetworkState={this.onNetworkState} />
           </section>
-          <div className="content"> </div>
           <Pagination
             defaultPageSize={20}
             showSizeChanger={false}

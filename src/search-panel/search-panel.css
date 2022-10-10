@@ -1,15 +1,19 @@
 .search {
     display: flex;
-    width: 90%;
-    margin-right: 36px;
-    margin-left: 36px;
+    position: relative;
+    width: 100%;
     padding-left: 12px;
+    margin-right: 30px;
     margin-top: 10px;
     align-items: center;
     border: 1px solid #D9D9D9;
     height: 40px;
     border-radius: 4px;
+    align-self: center;
     z-index: 2;
+}
+
+.form {
 }
 
 .search::placeholder {

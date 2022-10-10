@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Rate, Spin } from 'antd';
+import { Rate } from 'antd';
 import './movie.css';
 import PropTypes from 'prop-types';
-import { LoadingOutlined } from '@ant-design/icons';
 
 import Genre from '../genre';
 import SwapiService from '../services/swapi-service';
@@ -48,7 +47,6 @@ export default class Movie extends Component {
       average: 0,
       poster: null,
       error: false,
-      posterStatus: false,
     };
   }
 
@@ -81,52 +79,37 @@ export default class Movie extends Component {
     if (this.props.sessionID) {
       this.swapiSerwice.postRating(this.props.sessionID, this.props.id, e);
     }
-    this.swapiSerwice.getAllMovies();
     this.setState({
       average: e,
     });
   };
 
   // есть ли постер
-  thereIsPoster = () => {
+  thereIsPoster = () =>
     this.swapiSerwice
       .getPoster(this.props.poster)
       .then((response) => {
         if (response.ok) {
           this.setState({
             poster: response.url,
-            posterStatus: true,
           });
         }
       })
       .catch(this.errorPoster);
-  };
 
   render() {
-    const { name, date, description, id, genreID } = this.props;
-    const { average, poster, error, posterStatus } = this.state;
-    const antIcon = (
-      <LoadingOutlined
-        style={{
-          fontSize: 45,
-        }}
-        spin
-      />
-    );
-    const loadIcon = (
-      <div className="spin__poster">
-        <Spin indicator={antIcon} />
-      </div>
-    );
+    const { name, date, description, id, genreID, overallRating } = this.props;
+    const { average, poster, error } = this.state;
+
     let classAverage = 'average text';
 
-    if (average <= 3) {
+    if (overallRating <= 3) {
       classAverage += ' red';
-    } else if (average > 3 && average <= 5) {
+    } else if (overallRating > 3 && overallRating <= 5) {
       classAverage += ' orange';
-    } else if (average > 5 && average <= 7) {
+    } else if (overallRating > 5 && overallRating <= 7) {
       classAverage += ' yellow';
-    } else if (average > 7) {
+    } else if (overallRating > 7) {
       classAverage += ' green';
     }
 
@@ -138,17 +121,18 @@ export default class Movie extends Component {
         alt="Не удалось загрузить картинку фильма, попробуйте еще раз :("
       />
     );
+    const screen = window.screen.width >= 768 && window.screen.width < 1024;
     return (
       <li className="movie" id={id}>
-        {!posterStatus ? loadIcon : posterImg}
+        {posterImg}
         <div className="movie_characteristics">
           <div className="movie_header">
             <h5 className="movie_name text">{Movie.textReduction(name, 3)}</h5>
-            <div className={classAverage}>{average}</div>
+            <div className={classAverage}>{Math.floor(overallRating)}</div>
           </div>
           <span className="movie_date text">{Movie.dataFormat(date)}</span>
           <Genre genreID={genreID} />
-          <p className="movie_description text">{Movie.textReduction(description, 16)}</p>
+          <p className="movie_description text">{Movie.textReduction(description, screen ? 40 : 16)}</p>
           <Rate allowHalf value={average} count={10} className="rate" onChange={(e) => this.onRate(e)} />
         </div>
       </li>

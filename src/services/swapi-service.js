@@ -17,14 +17,14 @@ export default class SwapiService {
   // гет запрос на получение постера
   async getPoster(poster) {
     const res = await fetch(`https://image.tmdb.org/t/p/original${poster}`);
-    if (!res.ok) {
-      throw new Error('Не удалось выполнить запрос');
-    }
     return res;
   }
 
   // гет запрос на получение списка фильмов
   async getAllMovies(request = 'return', pagIndex = 1) {
+    if (!request) {
+      request = 'return';
+    }
     const res = await this.getResource(
       `https://api.themoviedb.org/3/search/movie?&api_key=${this.apiKey}&query=${request}&page=${pagIndex}`
     );

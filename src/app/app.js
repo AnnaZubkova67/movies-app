@@ -130,11 +130,10 @@ class App extends Component {
     });
   };
 
-  // получение оцененных фильмов при клике на rate
+  //  клик на rate
   rateClick = () => {
     this.rateMovies().then(() => {
       this.setState({
-        moviesData: JSON.parse(localStorage.getItem('moviesDataRate')),
         activeTabRate: true,
         activeTabSearch: false,
         totalResults: JSON.parse(localStorage.getItem('totalResultsRate')),

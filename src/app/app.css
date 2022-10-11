@@ -1,17 +1,5 @@
-
 ul {
     list-style-type: none;
-}
-
-.content {
-    z-index: 1;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    height: 100%;
-    width: 73%;
-    align-items: center;
-    background-color: #FFFFFF;
 }
 
 .movies-app {
@@ -19,37 +7,16 @@ ul {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: #FFFFFF;
 }
 
 .main {
     max-width:1010px;
     padding: 20px;
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*height: 100%;*/
-
-    /*align-items: center;*/
-    /*flex-wrap: wrap;*/
-    /*background-color: #FFFFFF;*/
-    /*z-index: 2;*/
 }
 
 
 .pagination {
-    background-color: #FFFFFF;
     margin-bottom: 15px;
-    z-index: 2;
-}
-
-@media (max-width: 1439px) {
-    .main {
-        width: 100%;
-    }
-    .content {
-        width: 100%;
-    }
-
 }
 
 @media (max-width: 425px) {

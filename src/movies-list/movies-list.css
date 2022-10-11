@@ -1,17 +1,8 @@
 .movies-list {
     display: flex;
-    z-index: 2;
-    position: relative;
-    bottom: 0;
     overflow: auto;
     justify-content: center;
-    /*padding: 0 35px 0 35px;*/
-    flex-direction: row;
-    margin-top: 32px;
     flex-wrap: wrap;
-    height: 100%;
-    margin-block-start: 0;
-    margin-block-end: 0;
     padding-inline-start: 0;
 
 }
@@ -22,6 +13,7 @@
 
 .error {
     align-self: center;
+    width: 100%;
 }
 
 @media (max-width: 425px) {

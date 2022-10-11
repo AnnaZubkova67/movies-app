@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Pagination } from 'antd';
+import { Alert, Pagination } from 'antd';
 
 import MoviesList from '../movies-list';
 import NetworkState from '../network-state';
@@ -52,6 +52,9 @@ class App extends Component {
     ) {
       this.updateMovies();
     }
+    if (this.state.pagIndex !== prevState.pagIndex && this.state.activeTabRate) {
+      this.rateMovies();
+    }
   }
 
   // получение списка жанров
@@ -68,6 +71,7 @@ class App extends Component {
   // загрузка фильмов с сервера завершена успешно
   onMoviesLoaded = (mov) => {
     localStorage.setItem('moviesData', JSON.stringify(mov.results));
+    localStorage.setItem('totalResults', JSON.stringify(mov.total_results));
     this.setState({
       moviesData: mov.results,
       loading: false,
@@ -145,17 +149,26 @@ class App extends Component {
       activeTabRate: false,
       activeTabSearch: true,
       pagIndex: 1,
-      valueInput: undefined,
+      valueInput: '',
+      totalResults: JSON.parse(localStorage.getItem('totalResults')),
     });
   };
 
   // получение оцененных фильмов
   async rateMovies() {
+    if (!this.state.activeTabRate) {
+      await this.setState({
+        pagIndex: 1,
+      });
+    }
     const { sessionID, pagIndex } = this.state;
     if (sessionID) {
       await this.swapiService.gerRating(sessionID, pagIndex).then(async (response) => {
         localStorage.setItem('moviesDataRate', JSON.stringify(response.results));
         localStorage.setItem('totalResultsRate', JSON.stringify(response.total_results));
+        this.setState({
+          moviesData: JSON.parse(localStorage.getItem('moviesDataRate')),
+        });
       });
     }
   }
@@ -186,10 +199,24 @@ class App extends Component {
       totalResults,
     } = this.state;
 
+    const errorElement = (
+      <div className="error">
+        <Alert
+          message="Error"
+          description="Что-то пошло не так, невозможно загрузить данные :("
+          type="error"
+          showIcon
+        />
+      </div>
+    );
+
+    const errorMessage = error ? errorElement : null;
+
     return (
       <SwapiServiceProvider value={this.state.genre}>
         <section className="movies-app">
           <section className="main">
+            {errorMessage}
             <Header
               onSearchMovies={this.searchMovies}
               valueInput={valueInput}
@@ -212,6 +239,7 @@ class App extends Component {
             defaultPageSize={20}
             showSizeChanger={false}
             defaultCurrent={pagIndex}
+            current={pagIndex}
             total={totalResults}
             className="pagination"
             onChange={(e) => this.pagination(e)}

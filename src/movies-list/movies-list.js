@@ -23,12 +23,6 @@ function MoviesList({ moviesData, loading, error, network, sessionID }) {
     </div>
   );
 
-  const errorElement = (
-    <div className="error">
-      <Alert message="Error" description="Что-то пошло не так, невозможно загрузить данные :(" type="error" showIcon />
-    </div>
-  );
-
   const networkElement = (
     <div className="error">
       <Alert message="Error" description="Вы не подключены к сети :(" type="error" showIcon />
@@ -74,7 +68,6 @@ function MoviesList({ moviesData, loading, error, network, sessionID }) {
     );
   });
 
-  const errorMessage = error ? errorElement : null;
   const spinner = loading && !error ? loadIcon : null;
   const content = !loading && network ? elements : null;
   const networkMessage =
@@ -82,7 +75,6 @@ function MoviesList({ moviesData, loading, error, network, sessionID }) {
 
   return (
     <ul className="movies-list">
-      {errorMessage}
       {content}
       {spinner}
       {networkMessage}

@@ -11,32 +11,38 @@ import movieImage from './movie.png';
 export default class Movie extends Component {
   // сокращение текста
   static textReduction(text, wordCount) {
-    let arrText = text.split(' ');
-    if (arrText.length >= wordCount + 1) {
-      arrText = arrText.slice(0, wordCount);
-      return `${arrText.join(' ')}...`;
+    if (typeof text !== 'undefined') {
+      let arrText = text.split(' ');
+      if (arrText.length >= wordCount + 1) {
+        arrText = arrText.slice(0, wordCount);
+        return `${arrText.join(' ')}...`;
+      }
+      return `${arrText.join(' ')}`;
     }
-    return `${arrText.join(' ')}`;
+    return false;
   }
 
   // преобразование даты
   static dataFormat = (data) => {
-    const mount = {
-      '01': 'January',
-      '02': 'February',
-      '03': 'March',
-      '04': 'April',
-      '05': 'May',
-      '06': 'June',
-      '07': 'July',
-      '08': 'August',
-      '09': 'September',
-      10: 'October',
-      11: 'November',
-      12: 'December',
-    };
-    const dataArr = data.split('-');
-    return `${mount[dataArr[1]]} ${dataArr[2]}, ${dataArr[0]}`;
+    if (typeof data !== 'undefined') {
+      const mount = {
+        '01': 'January',
+        '02': 'February',
+        '03': 'March',
+        '04': 'April',
+        '05': 'May',
+        '06': 'June',
+        '07': 'July',
+        '08': 'August',
+        '09': 'September',
+        10: 'October',
+        11: 'November',
+        12: 'December',
+      };
+      const dataArr = data.split('-');
+      return `${mount[dataArr[1]]} ${dataArr[2]}, ${dataArr[0]}`;
+    }
+    return false;
   };
 
   swapiSerwice = new SwapiService();
@@ -89,7 +95,7 @@ export default class Movie extends Component {
     this.swapiSerwice
       .getPoster(this.props.poster)
       .then((response) => {
-        if (response.ok) {
+        if (response.ok && response.url !== null) {
           this.setState({
             poster: response.url,
           });

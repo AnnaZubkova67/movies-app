@@ -111,6 +111,7 @@ class App extends Component {
     this.setState({
       valueInput: e.target.value,
       loading: true,
+      pagIndex: 1,
     });
   };
 

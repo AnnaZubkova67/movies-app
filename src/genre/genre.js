@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import { SwapiServiceConsumer } from '../swapi-service-context';
+import { GenreConsumer } from '../swapi-service-context';
 import './genre.css';
 
 export default class Genre extends Component {
   render() {
     const { genreID } = this.props;
     return (
-      <SwapiServiceConsumer>
+      <GenreConsumer>
         {(genre) => {
           if (genre.length !== 0) {
             const genres = genreID.map((id) => {
@@ -32,7 +32,7 @@ export default class Genre extends Component {
           }
           return true;
         }}
-      </SwapiServiceConsumer>
+      </GenreConsumer>
     );
   }
 }

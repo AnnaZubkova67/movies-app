@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { Alert, Pagination } from 'antd';
+import { Alert, Pagination, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 import MoviesList from '../movies-list';
 import NetworkState from '../network-state';
 import Header from '../header';
 import './app.css';
 import SwapiService from '../services/swapi-service';
-import { SwapiServiceProvider } from '../swapi-service-context';
+import { GenreProvider } from '../swapi-service-context';
+
+import 'antd/dist/antd.css';
 
 class App extends Component {
   swapiService = new SwapiService();
@@ -33,7 +36,6 @@ class App extends Component {
     this.getListMovies(this.state.valueInput);
     if (localStorage.getItem('sessionID')) {
       await this.sessionIDSave();
-      // await this.rateMovies();
     } else {
       await this.sessionId();
     }
@@ -99,6 +101,7 @@ class App extends Component {
       this.setState({
         moviesData: newArr.results,
         totalResults: newArr.total_results,
+        loading: false,
       });
     });
   };
@@ -107,6 +110,7 @@ class App extends Component {
   searchMovies = (e) => {
     this.setState({
       valueInput: e.target.value,
+      loading: true,
     });
   };
 
@@ -120,7 +124,12 @@ class App extends Component {
 
   // подключен ли пользователь к сети
   onNetworkState = () => {
-    this.setState((network) => ({ network: !network }));
+    const { network } = this.state;
+    if (network) {
+      this.setState({ network: false });
+    } else {
+      this.setState({ network: true });
+    }
   };
 
   // определение индекса пагинации
@@ -209,42 +218,66 @@ class App extends Component {
       </div>
     );
 
+    const antIcon = (
+      <LoadingOutlined
+        style={{
+          fontSize: 45,
+        }}
+        spin
+      />
+    );
+    const loadIcon = (
+      <div className="spin">
+        <Spin indicator={antIcon} />
+      </div>
+    );
+
+    const networkElement = (
+      <div className="error">
+        <Alert message="Error" description="Вы не подключены к сети :(" type="error" showIcon />
+      </div>
+    );
+
+    const contentTag = (
+      <>
+        <MoviesList moviesData={moviesData} loading={loading} error={error} network={network} sessionID={sessionID} />
+        <Pagination
+          defaultPageSize={20}
+          showSizeChanger={false}
+          defaultCurrent={pagIndex}
+          current={pagIndex}
+          total={totalResults}
+          className="pagination"
+          onChange={(e) => this.pagination(e)}
+        />
+      </>
+    );
+
+    const spin = loading && !error ? loadIcon : null;
+    const content = !loading ? contentTag : null;
+    const networkMessage =
+      (!network && !loading && moviesData.length !== 0) || (!network && !loading) ? networkElement : null;
     const errorMessage = error ? errorElement : null;
 
     return (
-      <SwapiServiceProvider value={this.state.genre}>
+      <GenreProvider value={this.state.genre}>
         <section className="movies-app">
-          <section className="main">
-            {errorMessage}
-            <Header
-              onSearchMovies={this.searchMovies}
-              valueInput={valueInput}
-              sessionID={sessionID}
-              rateMovies={this.rateClick}
-              searchClick={this.searchClick}
-              activeTabSearch={activeTabSearch}
-              activeTabRate={activeTabRate}
-            />
-            <MoviesList
-              moviesData={moviesData}
-              loading={loading}
-              error={error}
-              network={network}
-              sessionID={sessionID}
-            />
-            <NetworkState onNetworkState={this.onNetworkState} />
-          </section>
-          <Pagination
-            defaultPageSize={20}
-            showSizeChanger={false}
-            defaultCurrent={pagIndex}
-            current={pagIndex}
-            total={totalResults}
-            className="pagination"
-            onChange={(e) => this.pagination(e)}
+          <NetworkState onNetworkState={this.onNetworkState} />
+          {networkMessage}
+          <Header
+            onSearchMovies={this.searchMovies}
+            valueInput={valueInput}
+            sessionID={sessionID}
+            rateMovies={this.rateClick}
+            searchClick={this.searchClick}
+            activeTabSearch={activeTabSearch}
+            activeTabRate={activeTabRate}
           />
+          <div className="content">
+            {content} {spin} {errorMessage}{' '}
+          </div>
         </section>
-      </SwapiServiceProvider>
+      </GenreProvider>
     );
   }
 }

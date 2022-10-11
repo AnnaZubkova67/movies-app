@@ -1,11 +1,11 @@
 function NetworkState({ onNetworkState }) {
-  window.onoffline = () => {
+  window.addEventListener('offline', () => {
     onNetworkState();
-  };
+  });
 
-  window.ononline = () => {
+  window.addEventListener('online', () => {
     onNetworkState();
-  };
+  });
 }
 
 export default NetworkState;

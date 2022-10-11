@@ -7,13 +7,40 @@ ul {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    max-width:1010px;
+    margin: auto;
+    padding: 20px;
 }
 
 .main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     max-width:1010px;
     padding: 20px;
 }
 
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spin {
+    align-self: center;
+    margin-top: 16px;
+}
+
+
+.error {
+    align-self: center;
+    width: 100%;
+    position: sticky !important;
+    top: 0;
+    z-index: 2;
+}
 
 .pagination {
     margin-bottom: 15px;

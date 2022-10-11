@@ -4,17 +4,10 @@
     justify-content: center;
     flex-wrap: wrap;
     padding-inline-start: 0;
+    max-width: 1010px;
 
 }
 
-.spin {
-    align-self: center;
-}
-
-.error {
-    align-self: center;
-    width: 100%;
-}
 
 @media (max-width: 425px) {
     .movies-list {

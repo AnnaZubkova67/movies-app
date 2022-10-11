@@ -7,7 +7,7 @@ import './header.css';
 import Movie from '../movie';
 
 function Header({ searchClick, activeTabSearch, rateMovies, valueInput, onSearchMovies, activeTabRate }) {
-  const debouncedSearch = debounce(onSearchMovies, 3000);
+  const debouncedSearch = debounce(onSearchMovies, 1000);
   const searchPanel = <SearchPanel onSearchMovies={debouncedSearch} valueInput={valueInput} />;
   return (
     <>

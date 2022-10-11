@@ -1,3 +1,3 @@
-import { SwapiServiceProvider, SwapiServiceConsumer } from './swapi-service-context';
+import { GenreProvider, GenreConsumer } from './swapi-service-context';
 
-export { SwapiServiceProvider, SwapiServiceConsumer };
+export { GenreProvider, GenreConsumer };

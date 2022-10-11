@@ -1,34 +1,11 @@
 import React from 'react';
-import { Spin, Alert } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 
 import Movie from '../movie';
 
 import './movies-list.css';
-import 'antd/dist/antd.css';
 
-function MoviesList({ moviesData, loading, error, network, sessionID }) {
-  const antIcon = (
-    <LoadingOutlined
-      style={{
-        fontSize: 45,
-      }}
-      spin
-    />
-  );
-  const loadIcon = (
-    <div className="spin">
-      <Spin indicator={antIcon} />
-    </div>
-  );
-
-  const networkElement = (
-    <div className="error">
-      <Alert message="Error" description="Вы не подключены к сети :(" type="error" showIcon />
-    </div>
-  );
-
+function MoviesList({ moviesData, sessionID }) {
   const elements = moviesData.map((item) => {
     const {
       id,
@@ -68,32 +45,15 @@ function MoviesList({ moviesData, loading, error, network, sessionID }) {
     );
   });
 
-  const spinner = loading && !error ? loadIcon : null;
-  const content = !loading && network ? elements : null;
-  const networkMessage =
-    (!network && !loading && moviesData.length !== 0) || (!network && !loading) ? networkElement : null;
-
-  return (
-    <ul className="movies-list">
-      {content}
-      {spinner}
-      {networkMessage}
-    </ul>
-  );
+  return <ul className="movies-list">{elements}</ul>;
 }
 
 export default MoviesList;
 
 MoviesList.defaultProps = {
-  loading: true,
-  error: false,
-  network: true,
   sessionID: '',
 };
 
 MoviesList.propTypes = {
-  loading: PropTypes.bool,
-  error: PropTypes.bool,
-  network: PropTypes.bool,
   sessionID: PropTypes.node,
 };

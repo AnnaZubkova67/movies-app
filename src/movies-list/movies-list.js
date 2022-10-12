@@ -19,8 +19,8 @@ function MoviesList({ moviesData, sessionID }) {
 
     let rating = 0;
 
-    if (JSON.parse(localStorage.getItem('moviesDataRate'))) {
-      JSON.parse(localStorage.getItem('moviesDataRate')).map((movie) => {
+    if (JSON.parse(localStorage.getItem('rateMoviesAll'))) {
+      JSON.parse(localStorage.getItem('rateMoviesAll')).map((movie) => {
         if (movie.id === item.id) {
           rating = movie.rating;
         }

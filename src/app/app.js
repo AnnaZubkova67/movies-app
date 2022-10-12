@@ -29,6 +29,7 @@ class App extends Component {
       activeTabRate: false,
       activeTabSearch: true,
       totalResults: 0,
+      rateMoviesAll: [],
     };
   }
 
@@ -118,6 +119,7 @@ class App extends Component {
   // получение ID сессии, если после его регистрации не прошло больше 12 часов
   sessionIDSave = () => {
     this.setState({
+      rateMoviesAll: JSON.parse(localStorage.getItem('rateMoviesAll')),
       sessionID: JSON.parse(localStorage.getItem('sessionID')),
       timeSession: JSON.parse(localStorage.getItem('timeSession')),
     });
@@ -144,6 +146,7 @@ class App extends Component {
   rateClick = () => {
     this.rateMovies().then(() => {
       this.setState({
+        moviesData: JSON.parse(localStorage.getItem('moviesDataRate')),
         activeTabRate: true,
         activeTabSearch: false,
         totalResults: JSON.parse(localStorage.getItem('totalResultsRate')),
@@ -175,7 +178,7 @@ class App extends Component {
       await this.swapiService.gerRating(sessionID, pagIndex).then(async (response) => {
         localStorage.setItem('moviesDataRate', JSON.stringify(response.results));
         localStorage.setItem('totalResultsRate', JSON.stringify(response.total_results));
-        this.setState({
+        await this.setState({
           moviesData: JSON.parse(localStorage.getItem('moviesDataRate')),
         });
       });
@@ -184,15 +187,26 @@ class App extends Component {
 
   // получение нового ID сессии
   async sessionId() {
-    await this.swapiService.getSession().then((id) => {
+    await this.swapiService.getSession().then(async (id) => {
       localStorage.setItem('sessionID', JSON.stringify(id));
       localStorage.setItem('timeSession', JSON.stringify(Date.now()));
-      this.setState({
+      localStorage.setItem('rateMoviesAll', JSON.stringify(this.state.rateMoviesAll));
+      await this.setState({
         sessionID: id,
         timeSession: Date.now(),
       });
     });
   }
+
+  // async rateMoviesAll () {
+  //   this.setState(({ rateMovies}) => {
+  //    const newArr = [...rateMovies, ...JSON.parse(localStorage.getItem('moviesDataRate')),];
+  //     localStorage.setItem('rateMoviesAll', JSON.stringify(newArr));
+  //    return ({
+  //      rateMovies: newArr,
+  //    })
+  //   })
+  // }
 
   render() {
     const {

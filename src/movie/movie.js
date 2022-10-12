@@ -85,6 +85,24 @@ export default class Movie extends Component {
     if (this.props.sessionID) {
       this.swapiSerwice.postRating(this.props.sessionID, this.props.id, e);
     }
+    let rateMoviesAll = JSON.parse(localStorage.getItem('rateMoviesAll'));
+    if (rateMoviesAll.length === 0) {
+      rateMoviesAll = rateMoviesAll.concat([{ id: this.props.id, rating: e }]);
+    } else {
+      // eslint-disable-next-line consistent-return
+      const newArr = rateMoviesAll.some((elem, i) => {
+        if (elem.id === this.props.id) {
+          rateMoviesAll.splice(i, 1, { id: this.props.id, rating: e });
+          return true;
+        }
+      });
+
+      if (!newArr) {
+        rateMoviesAll.push({ id: this.props.id, rating: e });
+      }
+    }
+    localStorage.setItem('rateMoviesAll', JSON.stringify([...rateMoviesAll]));
+
     this.setState({
       average: e,
     });

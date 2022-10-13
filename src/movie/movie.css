@@ -163,6 +163,9 @@
         margin-bottom: 0;
         flex-grow: 2;
     }
+    .ant-rate {
+        font-size: 17px !important;
+    }
 }
 
 @media (max-width: 425px) {

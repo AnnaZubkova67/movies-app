@@ -198,16 +198,6 @@ class App extends Component {
     });
   }
 
-  // async rateMoviesAll () {
-  //   this.setState(({ rateMovies}) => {
-  //    const newArr = [...rateMovies, ...JSON.parse(localStorage.getItem('moviesDataRate')),];
-  //     localStorage.setItem('rateMoviesAll', JSON.stringify(newArr));
-  //    return ({
-  //      rateMovies: newArr,
-  //    })
-  //   })
-  // }
-
   render() {
     const {
       moviesData,

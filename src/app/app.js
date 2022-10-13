@@ -188,6 +188,8 @@ class App extends Component {
   // получение нового ID сессии
   async sessionId() {
     await this.swapiService.getSession().then(async (id) => {
+      localStorage.setItem('moviesData', JSON.stringify(this.state.moviesData));
+      localStorage.setItem('totalResults', JSON.stringify(this.state.totalResults));
       localStorage.setItem('sessionID', JSON.stringify(id));
       localStorage.setItem('timeSession', JSON.stringify(Date.now()));
       localStorage.setItem('rateMoviesAll', JSON.stringify(this.state.rateMoviesAll));

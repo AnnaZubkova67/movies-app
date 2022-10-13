@@ -1,2 +1,2 @@
 # movies-app
-https://movies-app-six-ashen.vercel.app/
+https://movies-app-52i3.vercel.app/

@@ -29,7 +29,6 @@ class App extends Component {
       activeTabRate: false,
       activeTabSearch: true,
       totalResults: 0,
-      rateMoviesAll: [],
     };
   }
 
@@ -53,6 +52,7 @@ class App extends Component {
       this.state.valueInput !== prevState.valueInput ||
       (this.state.pagIndex !== prevState.pagIndex && this.state.activeTabSearch)
     ) {
+      localStorage.setItem('pagIndexSearch', JSON.stringify(this.state.pagIndex));
       this.updateMovies();
     }
     if (this.state.pagIndex !== prevState.pagIndex && this.state.activeTabRate) {
@@ -99,6 +99,7 @@ class App extends Component {
   updateMovies = () => {
     const { valueInput, pagIndex } = this.state;
     this.swapiService.getAllMovies(valueInput, pagIndex).then((newArr) => {
+      localStorage.setItem('moviesData', JSON.stringify(newArr.results));
       this.setState({
         moviesData: newArr.results,
         totalResults: newArr.total_results,
@@ -119,7 +120,6 @@ class App extends Component {
   // получение ID сессии, если после его регистрации не прошло больше 12 часов
   sessionIDSave = () => {
     this.setState({
-      rateMoviesAll: JSON.parse(localStorage.getItem('rateMoviesAll')),
       sessionID: JSON.parse(localStorage.getItem('sessionID')),
       timeSession: JSON.parse(localStorage.getItem('timeSession')),
     });
@@ -144,11 +144,13 @@ class App extends Component {
 
   //  клик на rate
   rateClick = () => {
+    this.setState({
+      activeTabRate: true,
+      activeTabSearch: false,
+    });
     this.rateMovies().then(() => {
       this.setState({
         moviesData: JSON.parse(localStorage.getItem('moviesDataRate')),
-        activeTabRate: true,
-        activeTabSearch: false,
         totalResults: JSON.parse(localStorage.getItem('totalResultsRate')),
       });
     });
@@ -160,9 +162,8 @@ class App extends Component {
       moviesData: JSON.parse(localStorage.getItem('moviesData')),
       activeTabRate: false,
       activeTabSearch: true,
-      pagIndex: 1,
-      valueInput: '',
       totalResults: JSON.parse(localStorage.getItem('totalResults')),
+      pagIndex: JSON.parse(localStorage.getItem('pagIndexSearch')),
     });
   };
 
@@ -192,7 +193,7 @@ class App extends Component {
       localStorage.setItem('totalResults', JSON.stringify(this.state.totalResults));
       localStorage.setItem('sessionID', JSON.stringify(id));
       localStorage.setItem('timeSession', JSON.stringify(Date.now()));
-      localStorage.setItem('rateMoviesAll', JSON.stringify(this.state.rateMoviesAll));
+      localStorage.setItem('rateMoviesAll', JSON.stringify([]));
       await this.setState({
         sessionID: id,
         timeSession: Date.now(),

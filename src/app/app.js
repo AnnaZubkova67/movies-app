@@ -34,6 +34,7 @@ class App extends Component {
 
   async componentDidMount() {
     this.getListMovies(this.state.valueInput);
+    localStorage.setItem('pagIndexSearch', JSON.stringify(1));
     if (localStorage.getItem('sessionID')) {
       await this.sessionIDSave();
     } else {

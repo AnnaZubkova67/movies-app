@@ -147,6 +147,7 @@ class App extends Component {
     this.setState({
       activeTabRate: true,
       activeTabSearch: false,
+      loading: true,
     });
     this.rateMovies().then(() => {
       this.setState({
@@ -181,6 +182,7 @@ class App extends Component {
         localStorage.setItem('totalResultsRate', JSON.stringify(response.total_results));
         await this.setState({
           moviesData: JSON.parse(localStorage.getItem('moviesDataRate')),
+          loading: false,
         });
       });
     }
